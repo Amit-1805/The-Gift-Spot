@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifting Portal</title>
+    <style>
+        /* Existing CSS */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f8; /* Soft Pinkish White */
+            color: #333;
+        }
+
+        header {
+            background-color: #ff9aa2; /* Soft Coral Pink */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .banner {
+            background-color: #ffb7b2; /* Soft Coral */
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .banner p {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .marquee-container {
+            background-color: #ff6f61; /* Coral */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .main-content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .slider {
+            position: relative;
+            width: 80%; /* Adjusted width for better fit */
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            display: flex;
+            justify-content: center; /* Center align content horizontally */
+            align-items: center; /* Center align content vertically */
+            padding: 20px; /* Add padding to ensure spacing */
+        }
+
+        .slide img {
+            max-width: 100%; /* Adjusted to fit within the slide */
+            max-height: 350px; /* Fixed height */
+            object-fit: cover; /* Ensure aspect ratio */
+            border-radius: 10px;
+        }
+
+        .marquee-overlay {
+            position: absolute;
+            bottom: 10px; /* Position at the bottom */
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.5); /* Slightly transparent background */
+            padding: 5px 0;
+        }
+
+        .marquee-overlay .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .footer {
+            background-color: #ff9aa2;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* New CSS for the product cards */
+        .product-section {
+            background-color: #fff5f8;
+            padding: 40px 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ff9aa2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            max-width: 300px; /* Adjust the max width */
+            margin: 0 auto; /* Center align the card */
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px; /* Larger image size */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff9aa2;
+        }
+
+        .product-card .add-to-cart {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-card .add-to-cart:hover {
+            background-color: #ff4a4a;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Gifting Portal</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="cart.html">My Cart</a></li>
+                <li><a href="#">Wishlist</a></li>
+                <li><a href="#">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>Welcome to Gifting Portal</h1>
+        <p>Find the Perfect Diary for Every Occasion</p>
+    </section>
+
+    <section class="marquee-container">
+        <div class="marquee-content">
+            Check out our latest diaries and promotions! | Huge discounts on selected diaries! | Limited time offers available now!
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="slider">
+            <div class="slider-container">
+                <div class="slide">
+                    <img src="diary1.png" alt="Diary">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Exclusive Diary Offers!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="dairy2.png" alt="Diary">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Limited Edition Diaries Available!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="dairy3.png" alt="Diary">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">New Diary Collection Out Now!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="dairy4.png" alt="Diary">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Shop Premium Diaries Today!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="dairy5.png" alt="Diary">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Get Yours Before They're Gone!</div>
+                    </div>
+                </div>
+            </div>
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+
+        <div class="product-section">
+            <h2>Our Diaries</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="diary1.png" alt="Diary 1">
+                    <h3>Classic Diary</h3>
+                    <p>Perfect for all occasions.</p>
+                    <div class="price">$10.99</div>
+                    <div class="quantity">
+                        <input type="number" min="1" value="1" id="quantity1">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Classic Diary', 10.99, 'diary1.png', 'quantity1')">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="diary2.png" alt="Diary 2">
+                    <h3>Premium Diary</h3>
+                    <p>Elegantly designed for your notes.</p>
+                    <div class="price">$15.99</div>
+                    <div class="quantity">
+                        <input type="number" min="1" value="1" id="quantity2">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Premium Diary', 15.99, 'diary2.png', 'quantity2')">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="diary3.png" alt="Diary 3">
+                    <h3>Luxury Diary</h3>
+                    <p>Experience luxury with every page.</p>
+                    <div class="price">$20.99</div>
+                    <div class="quantity">
+                        <input type="number" min="1" value="1" id="quantity3">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Luxury Diary', 20.99, 'diary3.png', 'quantity3')">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="diary4.png" alt="Diary 4">
+                    <h3>Eco-Friendly Diary</h3>
+                    <p>Made from recycled materials.</p>
+                    <div class="price">$12.99</div>
+                    <div class="quantity">
+                        <input type="number" min="1" value="1" id="quantity4">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Eco-Friendly Diary', 12.99, 'diary4.png', 'quantity4')">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="diary5.png" alt="Diary 5">
+                    <h3>Travel Diary</h3>
+                    <p>Capture your adventures in style.</p>
+                    <div class="price">$18.99</div>
+                    <div class="quantity">
+                        <input type="number" min="1" value="1" id="quantity5">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('Travel Diary', 18.99, 'diary5.png', 'quantity5')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Gifting Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+
+        function moveSlide(direction) {
+            const slides = document.querySelector('.slider-container');
+            const totalSlides = document.querySelectorAll('.slide').length;
+            slideIndex = (slideIndex + direction + totalSlides) % totalSlides;
+            slides.style.transform = 'translateX(' + (-slideIndex * 100) + '%)';
+        }
+
+        function addToCart(name, price, image, quantityId) {
+            const quantityInput = document.getElementById(quantityId);
+            const quantity = parseInt(quantityInput.value);
+
+            if (isNaN(quantity) || quantity <= 0) {
+                alert("Please enter a valid quantity.");
+                return;
+            }
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingProductIndex = cart.findIndex(item => item.name === name);
+            if (existingProductIndex !== -1) {
+                cart[existingProductIndex].quantity += quantity;
+            } else {
+                cart.push({ name, price, image, quantity });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`${name} has been added to your cart!`);
+
+            // Redirect to cart.html
+            window.location.href = 'cart.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff9aa2;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #ff6f61;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #ff9aa2;
+        }
+
+        .cart-item img {
+            max-width: 80px;
+            margin-right: 20px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #ff6f61;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-quantity {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 24px;
+            margin-top: 30px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 24px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Your Cart</div>
+    </header>
+
+    <section class="cart-container">
+        <h1>Your Selected Products</h1>
+        <ul class="cart-items" id="cart-items">
+            <!-- Cart items will be dynamically added here -->
+        </ul>
+        <div class="cart-total" id="cart-total">
+            <!-- Total price will be displayed here -->
+        </div>
+    </section>
+
+    <script>
+        // Load Cart Items from localStorage
+        function loadCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalContainer = document.getElementById('cart-total');
+            let totalPrice = 0;
+
+            // Check if cart is empty
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+                cartTotalContainer.innerHTML = '';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';  // Clear any previous content
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('li');
+                cartItem.classList.add('cart-item');
+
+                // Cart item HTML structure
+                cartItem.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.productName}">
+                    <div class="cart-item-details">
+                        <p class="cart-item-name">${item.productName}</p>
+                        <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+                        <p class="cart-item-quantity">Quantity: ${item.quantity}</p>
+                    </div>
+                `;
+
+                cartItemsContainer.appendChild(cartItem);
+
+                // Calculate total price
+                totalPrice += item.price * item.quantity;
+            });
+
+            // Display total price
+            cartTotalContainer.innerHTML = `<strong>Total: $${totalPrice.toFixed(2)}</strong>`;
+        }
+
+        // Call the function to load cart items
+        loadCart();
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        /* Your CSS styles here */
+    </style>
+</head>
+<body>
+
+<div class="cart-container" id="cart-container" style="display: none;">
+    <h1>Your Cart</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </tbody>
+    </table>
+
+    <div class="total" id="cart-total">Total: $0.00</div>
+    <button class="checkout" onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+    function loadCart() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartContainer = document.getElementById('cart-container');
+
+        // Retrieve the cart from localStorage
+        let cart = localStorage.getItem('cart'); // general cart data
+        if (cart) {
+            cart = JSON.parse(cart);
+            let total = 0;
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                cartItemsContainer.innerHTML += `
+                    <tr>
+                        <td class="cart-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <span>${item.name}</span>
+                        </td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${itemTotal.toFixed(2)}</td>
+                        <td><button onclick="removeFromCart(${index})">Remove</button></td>
+                    </tr>
+                `;
+            });
+
+            cartTotal.innerText = `Total: $${total.toFixed(2)}`;
+            cartContainer.style.display = 'block'; // Show cart
+        } else {
+            cartItemsContainer.innerHTML = '<tr><td colspan="5">Your cart is empty.</td></tr>';
+            cartTotal.innerText = `Total: $0.00`;
+            cartContainer.style.display = 'block'; // Show cart
+        }
+    }
+
+    function removeFromCart(index) {
+        let cart = localStorage.getItem('cart'); // Get general cart data
+        if (cart) {
+            cart = JSON.parse(cart);
+            cart.splice(index, 1); // Remove item from cart
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+            loadCart(); // Reload cart display
+        }
+    }
+
+    function checkout() {
+        // Redirect to the proceed.html page
+        window.location.href = 'proceed.php';
+    }
+
+    // Load cart when the page is loaded
+    window.onload = loadCart;
+</script>
+
+</body>
+</html>

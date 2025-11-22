@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Product</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 1em;
+            text-align: center;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            padding: 2em;
+        }
+
+        .product-preview {
+            width: 40%;
+            text-align: center;
+            position: relative;
+        }
+
+        .product-preview canvas {
+            border: 1px solid #ccc;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .customization-options {
+            width: 50%;
+        }
+
+        .option-group {
+            margin-bottom: 2em;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 0.5em;
+        }
+
+        .color-option {
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 1px solid #000;
+        }
+
+        .sticker-gallery {
+            display: flex;
+            gap: 0.5em;
+        }
+
+        .sticker-option {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border: 1px solid #000;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #lblProductTag, #stickerImg {
+            position: absolute;
+            display: none;
+        }
+
+        .preview-and-order {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 2em;
+        }
+
+        button {
+            padding: 0.8em 1.5em;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Customize Your Product</h1>
+    </header>
+
+    <main>
+        <section class="product-preview">
+            <canvas id="product-canvas"></canvas>
+            <div id="lblProductTag">Sample Text</div>
+            <img id="mug.jpg" src="" alt="Sticker">
+        </section>
+
+        <section class="customization-options">
+            <h2>Customization Options</h2>
+
+            <div class="option-group">
+                <h3>Text</h3>
+                <input type="text" id="text-input" placeholder="Enter your text here">
+                <div class="color-palette" id="text-color-palette">
+                    <button class="color-option" data-color="black" style="background-color: black;"></button>
+                    <button class="color-option" data-color="white" style="background-color: white;"></button>
+                    <button class="color-option" data-color="red" style="background-color: red;"></button>
+                    <button class="color-option" data-color="blue" style="background-color: blue;"></button>
+                    <button class="color-option" data-color="green" style="background-color: green;"></button>
+                </div>
+                <select id="font-select">
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+                <input type="number" id="size-input" min="1" max="5" value="2" title="Text Size (1 to 5)">
+                <button id="add-text-button">Add Text</button>
+                <button id="removeText">Remove Text</button>
+            </div>
+
+            <div class="option-group">
+                <h3>Images</h3>
+                <input type="file" id="image-upload">
+                <button id="add-image-button">Add Image</button>
+            </div>
+
+            <div class="option-group">
+                <h3>Colors</h3>
+                <div class="color-palette">
+                    <button class="color-option" data-color="red" style="background-color: red;"></button>
+                    <button class="color-option" data-color="blue" style="background-color: blue;"></button>
+                    <button class="color-option" data-color="green" style="background-color: green;"></button>
+                    <button class="color-option" data-color="black" style="background-color: black;"></button>
+                    <button class="color-option" data-color="white" style="background-color: white;"></button>
+                </div>
+            </div>
+
+            <div class="option-group">
+                <h3>Stickers</h3>
+                <input type="file" id="sticker">
+                <button id="removeSticker">Remove Sticker</button>
+                <button id="zoomInSticker">Zoom In</button>
+                <button id="zoomOutSticker">Zoom Out</button>
+            </div>
+
+            <div class="preview-and-order">
+                <button id="ArrowLeft">Left</button>
+                <button id="ArrowRight">Right</button>
+                <button id="UpArrow">Up</button>
+                <button id="DownArrow">Down</button>
+                <button id="reset-button">Reset</button>
+                <button id="preview-button">Preview</button>
+                <button id="order-button">Order Now</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let defaultLeftVal = 50;
+        let defaultTopVal = 50;
+        let stickerSize = 100;
+
+        // Initialize positions
+        $("#lblProductTag").css("left", defaultLeftVal + "%");
+        $("#lblProductTag").css("top", defaultTopVal + "%");
+
+        $("#stickerImg").css("left", defaultLeftVal + "%");
+        $("#stickerImg").css("top", defaultTopVal + "%");
+
+        // Arrow functions to move the text label and sticker
+        $("#ArrowRight").click(function() {
+            defaultLeftVal += 1;
+            $("#lblProductTag").css("left", defaultLeftVal + "%");
+            $("#stickerImg").css("left", defaultLeftVal + "%");
+        });
+
+        $("#ArrowLeft").click(function() {
+            defaultLeftVal -= 1;
+            $("#lblProductTag").css("left", defaultLeftVal + "%");
+            $("#stickerImg").css("left", defaultLeftVal + "%");
+        });
+
+        $("#DownArrow").click(function() {
+            defaultTopVal += 1;
+            $("#lblProductTag").css("top", defaultTopVal + "%");
+            $("#stickerImg").css("top", defaultTopVal + "%");
+        });
+
+        $("#UpArrow").click(function() {
+            defaultTopVal -= 1;
+            $("#lblProductTag").css("top", defaultTopVal + "%");
+            $("#stickerImg").css("top", defaultTopVal + "%");
+        });
+
+        // Sticker upload functionality
+        $("#sticker").change(function(event) {
+            var stickerImg = $("#stickerImg");
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                stickerImg.attr("src", e.target.result);
+                stickerImg.css("width", stickerSize + "px"); // Set the initial size of the sticker
+                stickerImg.show();
+            };
+
+            reader.readAsDataURL(event.target.files[0]);
+        });
+
+        // Remove text label
+        $("#removeText").click(function() {
+            $("#lblProductTag").toggle();
+            $(this).text(function(i, text){
+                return text === "Remove Text" ? "Show Text" : "Remove Text";
+            });
+        });
+
+        // Remove sticker
+        $("#removeSticker").click(function() {
+            $("#stickerImg").toggle();
+            $(this).text(function(i, text){
+                return text === "Remove Sticker" ? "Show Sticker" : "Remove Sticker";
+            });
+        });
+
+        // Zoom in sticker
+        $("#zoomInSticker").click(function() {
+            stickerSize += 10; // Increase the size by 10 pixels
+            $("#stickerImg").css("width", stickerSize + "px");
+        });
+
+        // Zoom out sticker
+        $("#zoomOutSticker").click(function() {
+            if (stickerSize > 10) { // Prevent sticker from becoming too small
+                stickerSize -= 10; // Decrease the size by 10 pixels
+                $("#stickerImg").css("width", stickerSize + "px");
+            }
+        });
+
+        // Get references to DOM elements
+        const productCanvas = document.getElementById('product-canvas');
+        const ctx = productCanvas.getContext('2d');
+
+        const textInput = document.getElementById('text-input');
+        const colorPalette = document.querySelector('.color-palette');
+        const textColorPalette = document.getElementById('text-color-palette');
+        const fontSelect = document.getElementById('font-select');
+        const sizeInput = document.getElementById('size-input');
+        const previewButton = document.getElementById('preview-button');
+        const resetButton = document.getElementById('reset-button');
+        const orderButton = document.getElementById('order-button');
+        const addTextButton = document.getElementById('add-text-button');
+        const addImageButton = document.getElementById('add-image-button');
+        const imageUpload = document.getElementById('image-upload');
+        const stickerGallery = document.querySelector('.sticker-gallery');
+
+        // Initial configurations
+        productCanvas.width = 400;
+        productCanvas.height = 400;
+        let currentTextColor = 'black';
+        let stickers = [];
+
+        // Function to update the canvas
+        function updateCanvas() {
+            ctx.clearRect(0, 0, productCanvas.width, productCanvas.height);
+
+            // Draw background color
+            ctx.fillStyle = currentTextColor;
+            ctx.fillRect(0, 0, productCanvas.width, productCanvas.height);
+
+            // Draw text
+            ctx.fillStyle = currentTextColor;
+            ctx.font = `${sizeInput.value * 10}px ${fontSelect.value}`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(textInput.value, productCanvas.width / 2, productCanvas.height / 2);
+
+            // Draw stickers
+            stickers.forEach(sticker => {
+                ctx.drawImage(sticker.img, sticker.x, sticker.y, sticker.width, sticker.height);
+            });
+        }
+
+        // Add text functionality
+        addTextButton.addEventListener('click', () => {
+            updateCanvas();
+        });
+
+        // Image upload functionality
+        addImageButton.addEventListener('click', () => {
+            const file = imageUpload.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const img = new Image();
+                img.src = e.target.result;
+
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0, productCanvas.width, productCanvas.height);
+                };
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Color change functionality
+        colorPalette.addEventListener('click', (e) => {
+            if (e.target.classList.contains('color-option')) {
+                const selectedColor = e.target.getAttribute('data-color');
+                updateCanvas(selectedColor);
+            }
+        });
+
+        // Text color change functionality
+        textColorPalette.addEventListener('click', (e) => {
+            if (e.target.classList.contains('color-option')) {
+                currentTextColor = e.target.getAttribute('data-color');
+                updateCanvas();
+            }
+        });
+
+        // Sticker selection functionality
+        stickerGallery.addEventListener('click', (e) => {
+            if (e.target.classList.contains('sticker-option')) {
+                const stickerSrc = e.target.getAttribute('data-sticker');
+                const img = new Image();
+                img.src = stickerSrc;
+
+                img.onload = () => {
+                    stickers.push({
+                        img: img,
+                        x: productCanvas.width / 2 - img.width / 2,
+                        y: productCanvas.height / 2 - img.height / 2,
+                        width: img.width,
+                        height: img.height
+                    });
+                    updateCanvas();
+                };
+            }
+        });
+
+        // Drag-and-drop functionality for stickers
+        let isDragging = false;
+        let dragSticker = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        productCanvas.addEventListener('mousedown', (e) => {
+            const mouseX = e.offsetX;
+            const mouseY = e.offsetY;
+
+            stickers.forEach(sticker => {
+                if (
+                    mouseX > sticker.x && mouseX < sticker.x + sticker.width &&
+                    mouseY > sticker.y && mouseY < sticker.y + sticker.height
+                ) {
+                    isDragging = true;
+                    dragSticker = sticker;
+                    offsetX = mouseX - sticker.x;
+                    offsetY = mouseY - sticker.y;
+                }
+            });
+        });
+
+        productCanvas.addEventListener('mousemove', (e) => {
+            if (isDragging && dragSticker) {
+                dragSticker.x = e.offsetX - offsetX;
+                dragSticker.y = e.offsetY - offsetY;
+                updateCanvas();
+            }
+        });
+
+        productCanvas.addEventListener('mouseup', () => {
+            isDragging = false;
+            dragSticker = null;
+        });
+
+        productCanvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+            dragSticker = null;
+        });
+
+        // Preview functionality
+        previewButton.addEventListener('click', () => {
+            updateCanvas();
+        });
+
+        // Reset functionality
+        resetButton.addEventListener('click', () => {
+            textInput.value = '';
+            currentTextColor = 'black';
+            fontSelect.value = 'Arial';
+            sizeInput.value = '2';
+            stickers = [];
+            updateCanvas();
+        });
+
+        // Order functionality
+        orderButton.addEventListener('click', () => {
+            if (confirm('Are you sure you want to order this customized product?')) {
+                alert('Your customized product has been ordered!');
+            }
+        });
+    </script>
+</body>
+</html>

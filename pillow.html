@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pillow Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff5f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff9aa2;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff6f61;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ff9aa2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff9aa2;
+        }
+
+        .product-card .add-to-cart {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-card .add-to-cart:hover {
+            background-color: #ff4a4a;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pillow Collection</h1>
+    </header>
+
+    <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img src="pillow1.jpeg" alt="Comfort Pillow">
+            <h3>Comfort Pillow</h3>
+            <p>Soft and cozy for ultimate comfort.</p>
+            <div class="price">$25</div>
+            <div class="quantity">
+                <input type="number" id="quantity1" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="addToCart('Comfort Pillow', 25, 'quantity1', 'pillow1.jpeg')">Add to Cart</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img src="pillow6.jpeg" alt="Memory Foam Pillow">
+            <h3>Memory Foam Pillow</h3>
+            <p>Supportive and durable for restful sleep.</p>
+            <div class="price">$35</div>
+            <div class="quantity">
+                <input type="number" id="quantity2" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="addToCart('Comfort Pillow', 25, 'quantity1', 'pillow6.jpeg')">Add to Cart</button>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img src="pillow3.jpeg" alt="Cooling Gel Pillow">
+            <h3>Cooling Gel Pillow</h3>
+            <p>Stay cool and refreshed throughout the night.</p>
+            <div class="price">$45</div>
+            <div class="quantity">
+                <input type="number" id="quantity3" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="addToCart('Cooling Gel Pillow', 45, 'quantity3', 'pillow3.jpeg')">Add to Cart</button>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img src="pillow4.jpg" alt="Orthopedic Pillow">
+            <h3>Orthopedic Pillow</h3>
+            <p>Perfect for neck and back support.</p>
+            <div class="price">$55</div>
+            <div class="quantity">
+                <input type="number" id="quantity4" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="addToCart('Orthopedic Pillow', 55, 'quantity4', 'pillow4.jpg')">Add to Cart</button>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+            <img src="pillow5.jpg" alt="Feather Pillow">
+            <h3>Feather Pillow</h3>
+            <p>Soft and luxurious for a premium feel.</p>
+            <div class="price">$65</div>
+            <div class="quantity">
+                <input type="number" id="quantity5" value="1" min="1">
+            </div>
+            <button class="add-to-cart" onclick="addToCart('Feather Pillow', 65, 'quantity5', 'pillow5.jpg')">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to add product to cart and store in localStorage
+        function addToCart(productName, productPrice, quantityId, productImage) {
+            const quantityInput = document.getElementById(quantityId);
+            if (quantityInput) {
+                const quantity = parseInt(quantityInput.value);
+
+                // Fetch cart from localStorage or initialize an empty array
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.productName === productName);
+
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({ productName, productPrice, quantity, productImage });
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`${productName} added to cart!`);
+            }
+        }
+    </script>
+
+</body>
+</html>

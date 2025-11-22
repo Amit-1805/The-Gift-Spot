@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff5f8;
+      color: #333;
+    }
+
+    header {
+      background-color: #ff9aa2;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 36px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    nav {
+      margin-top: 15px;
+    }
+
+    .nav-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-links li {
+      margin: 0 15px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #ffffff65;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .password-toggle {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+  <script>
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      const type = input.type === 'password' ? 'text' : 'password';
+      input.type = type;
+      const toggleText = type === 'password' ? 'Show' : 'Hide';
+      document.querySelector('.toggle-password').textContent = toggleText;
+    }
+
+    function registerUser() {
+      const email = document.getElementById('registerEmail').value.trim();
+      const mobile = document.getElementById('mobileNumber').value.trim();
+      const pincode = document.getElementById('pincode').value.trim();
+      const password = document.getElementById('registerPassword').value;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const mobileRegex = /^\d{10}$/;
+      const pincodeRegex = /^\d{6}$/;
+      const passwordRegex = /^(?=.*\d).{6,20}$/;
+
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      if (!mobileRegex.test(mobile)) {
+        alert('Mobile number must be exactly 10 digits.');
+        return false;
+      }
+
+      if (!pincodeRegex.test(pincode)) {
+        alert('Pincode must be exactly 7 digits.');
+        return false;
+      }
+
+      if (!passwordRegex.test(password)) {
+        alert('Password must be 6-20 characters and contain at least one number.');
+        return false;
+      }
+
+      return true;
+    }
+
+    // Show alert when max length is exceeded
+    function setMaxLengthAlert(id, maxLength) {
+      const input = document.getElementById(id);
+      let alerted = false;
+      input.addEventListener("input", function () {
+        if (input.value.length >= maxLength && !alerted) {
+          alert(`Maximum ${maxLength} characters allowed in ${input.previousElementSibling.innerText}`);
+          alerted = true;
+        }
+        if (input.value.length < maxLength) {
+          alerted = false;
+        }
+      });
+    }
+
+    window.onload = function () {
+      setMaxLengthAlert("firstName", 20);
+      setMaxLengthAlert("lastName", 20);
+      setMaxLengthAlert("registerEmail", 50);
+      setMaxLengthAlert("mobileNumber", 10);
+      setMaxLengthAlert("address", 100);
+      setMaxLengthAlert("pincode", 7);
+      setMaxLengthAlert("registerPassword", 20);
+    };
+  </script>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">Shopping Portal</div>
+      <ul class="nav-links">
+        <li><a href="Home.html">Home</a></li>
+        <li><a href="login.php">Login</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="product.html">Product</a></li>
+        <li><a href="cart.html">My Cart</a></li>
+        <li><a href="admin.php">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Registration</h2>
+    <form action="signup.php" method="post" onsubmit="return registerUser()">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" maxlength="20" required />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" maxlength="20" required />
+
+      <label for="registerEmail">Email:</label>
+      <input type="email" id="registerEmail" name="registerEmail" maxlength="50" required />
+
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="tel" id="mobileNumber" name="mobileNumber" maxlength="10" required />
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" maxlength="100" required />
+
+      <label for="pincode">Pincode:</label>
+      <input type="text" id="pincode" name="pincode" maxlength="6" required />
+
+      <label for="registerPassword">Password:</label>
+      <div class="password-toggle">
+        <input type="password" id="registerPassword" name="registerPassword" maxlength="20" required />
+        <span class="toggle-password" onclick="togglePasswordVisibility('registerPassword')">Show</span>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifting Website - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f8;
+    color: #333;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Header and Navigation Styles */
+header {
+    background-color: #ff9aa2;
+    padding: 20px;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+}
+
+/* Navigation Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #ff6f61;
+}
+
+/* Video Background Styles */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(70%);
+}
+
+/* Banner Content Styles */
+.banner {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+}
+
+.banner h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.banner p {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.banner .btn {
+    padding: 15px 30px;
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    touch-action: manipulation;
+}
+
+.banner .btn:hover {
+    background-color: #ff4500;
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #ff9aa2;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    margin-top: 40px;
+}
+
+/* Responsive Styles */
+
+/* Tablet and Below */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        background-color: #ff9aa2;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 200px;
+        display: none;
+        padding: 15px;
+        border-radius: 0 0 0 8px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+        display: block;
+    }
+
+    nav {
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .banner h1 {
+        font-size: 32px;
+    }
+
+    .banner p {
+        font-size: 18px;
+    }
+
+    .banner .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+}
+    </style>
+    <script>
+        // Toggle navigation on small screens
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="video-background">
+        <source src="bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Header with Navigation -->
+    <header>
+        <nav>
+            <div class="logo">The Gift Spot</div>
+            <span class="menu-toggle" onclick="toggleMenu()">&#9776;</span>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="login1.php">Login</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="all.html">Product</a></li>
+                <li><a href="adlogin.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner Content -->
+    <div class="banner">
+        <div>
+            <h1>Welcome to Our Gifting Store</h1>
+            <p>Find the perfect gifts for every occasion.</p>
+            <a href="all.html" class="btn">Explore Now</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Gifting Website. All rights reserved.</p>
+    </div>
+</body>
+</html>

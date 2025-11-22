@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifting Portal</title>
+    <style>
+        /* Existing CSS */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f8; /* Soft Pinkish White */
+            color: #333;
+        }
+
+        header {
+            background-color: #ff9aa2; /* Soft Coral Pink */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .banner {
+            background-color: #ffb7b2; /* Soft Coral */
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .banner p {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .marquee-container {
+            background-color: #ff6f61; /* Coral */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        .main-content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .slider {
+            position: relative;
+            width: 80%; /* Adjusted width for better fit */
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            display: flex;
+            justify-content: center; /* Center align content horizontally */
+            align-items: center; /* Center align content vertically */
+            padding: 20px; /* Add padding to ensure spacing */
+        }
+
+        .slide img {
+            max-width: 100%; /* Adjusted to fit within the slide */
+            max-height: 350px; /* Fixed height */
+            object-fit: cover; /* Ensure aspect ratio */
+            border-radius: 10px;
+        }
+
+        .marquee-overlay {
+            position: absolute;
+            bottom: 10px; /* Position at the bottom */
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.5); /* Slightly transparent background */
+            padding: 5px 0;
+        }
+
+        .marquee-overlay .marquee-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 10s linear infinite;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .footer {
+            background-color: #ff9aa2;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* New CSS for the product cards */
+        .product-section {
+            background-color: #fff5f8;
+            padding: 40px 20px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #ff9aa2;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            max-width: 300px; /* Adjust the max width */
+            margin: 0 auto; /* Center align the card */
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px; /* Larger image size */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 {
+            font-size: 22px;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .product-card .price {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-card .quantity input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff9aa2;
+        }
+
+        .product-card .add-to-cart {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .product-card .add-to-cart:hover {
+            background-color: #ff4a4a;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Gifting Portal</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="cart.html">My Cart</a></li>
+                <li><a href="#">Wishlist</a></li>
+                <li><a href="#">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="banner">
+        <h1>Welcome to Gifting Portal</h1>
+        <p>Find the Perfect Gift for Every Occasion</p>
+    </section>
+
+    <section class="marquee-container">
+        <div class="marquee-content">
+            Check out our latest gifts and promotions! | Huge discounts on selected items! | Limited time offers available now!
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="slider">
+            <div class="slider-container">
+                <div class="slide">
+                    <img src="bottle.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Exciting Offers on Bottles!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="bottle1.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Limited Edition Bottles Available!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="bottle2.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">New Collection Out Now!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="bottle3.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Shop Premium Bottles Today!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="bottle4.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Exclusive Offers for a Limited Time!</div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="bottle5.jpg" alt="Bottle">
+                    <div class="marquee-overlay">
+                        <div class="marquee-content">Shop Bottles Now!</div>
+                    </div>
+                </div>
+            </div>
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+    </main>
+
+    <!-- New Product Section -->
+    <section class="product-section">
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-product-id="1">
+                <img src="bottle.jpg" alt="Bottle 1">
+                <h3>Bottle 1</h3>
+                <p>High-quality bottle perfect for daily use.</p>
+                <div class="price">$19.99</div>
+                <div class="quantity">
+                    <input type="number" id="quantity1" value="1" min="1">
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bottle 1', 19.99, 'quantity1', 'bottle.jpg')">Add to Cart</button>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-product-id="2">
+                <img src="bottle1.jpg" alt="Bottle 2">
+                <h3>Bottle 2</h3>
+                <p>Stylish and durable bottle with great insulation.</p>
+                <div class="price">$24.99</div>
+                <div class="quantity">
+                    <input type="number" id="quantity2" value="1" min="1">
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bottle 2', 24.99, 'quantity2', 'bottle1.jpg')">Add to Cart</button>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-product-id="3">
+                <img src="bottle2.jpg" alt="Bottle 3">
+                <h3>Bottle 3</h3>
+                <p>Perfect for keeping your drinks hot or cold.</p>
+                <div class="price">$29.99</div>
+                <div class="quantity">
+                    <input type="number" id="quantity3" value="1" min="1">
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bottle 3', 29.99, 'quantity3', 'bottle2.jpg')">Add to Cart</button>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-product-id="4">
+                <img src="bottle3.jpg" alt="Bottle 4">
+                <h3>Bottle 4</h3>
+                <p>Compact and easy to carry, ideal for travel.</p>
+                <div class="price">$22.99</div>
+                <div class="quantity">
+                    <input type="number" id="quantity4" value="1" min="1">
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bottle 4', 22.99, 'quantity4', 'bottle3.jpg')">Add to Cart</button>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-product-id="5">
+                <img src="bottle4.jpg" alt="Bottle 5">
+                <h3>Bottle 5</h3>
+                <p>Eco-friendly bottle made from recycled materials.</p>
+                <div class="price">$27.99</div>
+                <div class="quantity">
+                    <input type="number" id="quantity5" value="1" min="1">
+                </div>
+                <button class="add-to-cart" onclick="addToCart('Bottle 5', 27.99, 'quantity5', 'bottle4.jpg')">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Gifting Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slideInterval = 5000; // 5 seconds per slide
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+            const offset = -currentSlide * 100;
+            document.querySelector('.slider-container').style.transform = `translateX(${offset}%)`;
+        }
+
+        function moveSlide(step) {
+            showSlide(currentSlide + step);
+        }
+
+        // Initialize the slider
+        showSlide(currentSlide);
+
+        // Automatically move to the next slide every 5 seconds
+        setInterval(() => {
+            moveSlide(1);
+        }, slideInterval);
+
+        // Function to add an item to the cart
+        function addToCart(name, price, quantityId, image) {
+            // Get the quantity from the input field
+            const quantity = parseInt(document.getElementById(quantityId).value);
+
+            // Get the current cart from local storage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Check if the item already exists in the cart
+            const existingItem = cart.find(item => item.name === name);
+
+            // If the item exists, update the quantity
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                // If the item does not exist, add it to the cart
+                cart.push({ 
+                    name: name, 
+                    price: `$${price.toFixed(2)}`, 
+                    quantity: quantity,
+                    image: image // Store the image URL
+                });
+            }
+
+            // Save the updated cart to local storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Notify the user that the item has been added
+            alert('Item added to cart!');
+        }
+    </script>
+</body>
+</html>

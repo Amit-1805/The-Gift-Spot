@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Customized Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .image-container {
+            position: relative;
+            text-align: center;
+            max-width: 500px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .custom-text {
+            position: absolute;
+            color: #000;
+            font-size: 20px;
+            word-wrap: break-word;
+        }
+        .sticker {
+            position: absolute;
+        }
+        select, button {
+            margin: 10px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select Customization</h1>
+    <form action="display_image.php" method="get">
+        <label for="customization_id">Select Customization:</label>
+        <select name="customization_id" id="customization_id">
+            <?php
+            // Database connection details
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "customizations_db"; // Replace with your actual database name
+
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Retrieve all customizations
+            $query = "SELECT id, color FROM customizations";
+            $result = $conn->query($query);
+
+            // Check if any customizations are found
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $selected = (isset($_GET['customization_id']) && $_GET['customization_id'] == $row['id']) ? 'selected' : '';
+                    echo '<option value="' . $row['id'] . '" ' . $selected . '>' . $row['color'] . ' Mug</option>';
+                }
+            } else {
+                echo '<option value="">No customizations found</option>';
+            }
+
+            $conn->close();
+            ?>
+        </select>
+        <button type="submit">View Customization</button>
+    </form>
+
+    <?php
+    // Display selected customization image, sticker, and text
+    if (isset($_GET['customization_id']) && !empty($_GET['customization_id'])) {
+        $customization_id = (int)$_GET['customization_id'];
+
+        // Database connection details
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "customizations_db"; // Replace with your actual database name
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Retrieve the selected customization details
+        $stmt = $conn->prepare("SELECT text_left, text_top, sticker_path, sticker_left, sticker_top, sticker_width, color, product_image_path FROM customizations WHERE id = ?");
+        $stmt->bind_param("i", $customization_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $textLeft = $row['text_left'];
+            $textTop = $row['text_top'];
+            $stickerPath = $row['sticker_path'];
+            $stickerLeft = $row['sticker_left'];
+            $stickerTop = $row['sticker_top'];
+            $stickerWidth = $row['sticker_width'];
+            $textColor = $row['color'];
+            $productImagePath = $row['product_image_path'];
+
+            echo '<div class="image-container">';
+            echo '<img src="' . $productImagePath . '" alt="Customized Product Image">';
+
+            // Display the sticker
+            if (!empty($stickerPath)) {
+                // Decode and save the Base64 sticker image
+                $image_data = base64_decode($stickerPath);
+                $image_path = 'sticker' . $customization_id . '.png'; // Ensure a unique filename
+                file_put_contents($image_path, $image_data);
+
+                echo '<img src="' . $image_path . '" class="sticker" style="left:' . $stickerLeft . 'px; top:' . $stickerTop . 'px; width:' . $stickerWidth . 'px;">';
+            }
+
+            // Display the text
+            echo '<div class="custom-text" style="left:' . $textLeft . 'px; top:' . $textTop . 'px; color:' . $textColor . ';">Your Custom Text</div>';
+            
+            echo '</div>';
+        } else {
+            echo '<p>No customization found.</p>';
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+    ?>
+</body>
+</html>

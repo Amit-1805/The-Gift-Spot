@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff5f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #ff9aa2;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff6f61;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        .cart-item h3 {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+
+        .cart-item p {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .cart-item .quantity {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .cart-item .quantity input {
+            width: 50px;
+            text-align: center;
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff9aa2;
+        }
+
+        .cart-item .quantity button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cart-item .quantity button:hover {
+            background-color: #ff4a4a;
+        }
+
+        .cart-item .price {
+            font-size: 16px;
+            margin-right: 20px;
+        }
+
+        .remove-item {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            color: #ff4a4a;
+            font-size: 20px;
+        }
+
+        .total-price {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #ff4a4a;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+
+    <div class="cart-container">
+        <!-- Cart Items will be dynamically added here -->
+        <div id="cart-items"></div>
+
+        <div class="total-price" id="total-price">$0.00</div>
+
+        <a href="index.html" class="btn">Continue Shopping</a>
+        <a href="checkout.html" class="btn">Proceed to Checkout</a>
+    </div>
+
+    <script>
+        function displayCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalPriceElement = document.getElementById('total-price');
+            
+            // Fetch cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            let totalPrice = 0;
+            cartItemsContainer.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                const itemPrice = item.productPrice * item.quantity;
+                totalPrice += itemPrice;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.productImage}" alt="${item.productName}">
+                        <div>
+                            <h3>${item.productName}</h3>
+                            <p class="quantity">
+                                Quantity: 
+                                <input type="number" id="quantity${index}" value="${item.quantity}" min="1">
+                                <button onclick="updateQuantity(${index})">Update</button>
+                            </p>
+                            <p class="price">Price: $${itemPrice.toFixed(2)}</p>
+                        </div>
+                        <span class="remove-item" onclick="removeItem(${index})">&times;</span>
+                    </div>
+                `;
+            });
+
+            totalPriceElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+        }
+
+        function updateQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const newQuantity = parseInt(document.getElementById(`quantity${index}`).value);
+            
+            if (newQuantity > 0) {
+                cart[index].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                displayCart();
+            } else {
+                alert('Quantity must be at least 1.');
+            }
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            displayCart();
+        }
+
+        // Call displayCart on page load
+        displayCart();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: #fff5f5;
+            color: #333;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ff6f61; /* Coral Pink */
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar .logo {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #ff897d; /* Light Coral */
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-left {
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .header-right .profile {
+            background-color: #ff6f61;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-top: 20px;
+        }
+
+        .section h2 {
+            border-bottom: 3px solid #ff6f61;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #ff9a8b, #ff6f61); /* Coral Pink Gradient */
+            padding: 20px;
+            border-radius: 10px;
+            width: 22%;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-card:before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover:before {
+            top: -70px;
+            right: -70px;
+            width: 140px;
+            height: 140px;
+        }
+
+        .metric-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #fff;
+            z-index: 2;
+            position: relative;
+        }
+
+        .metric-card span {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #fff;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .metrics {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .metric-card {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">Admin Dashboard</div>
+        <ul>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#users">Users</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li><a href="#settings">Settings</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <header>
+            <div class="header-left">Admin Dashboard</div>
+            <div class="header-right">
+                <div class="profile">Admin</div>
+            </div>
+        </header>
+        <div id="dashboard" class="section">
+            <h2>Dashboard</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <h3>Total Users</h3>
+                    <span id="total-users">0</span>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Products</h3>
+                    <span id="total-products">0</span>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Customizations</h3>
+                    <span id="total-customizations">0</span>
+                </div>
+                <div class="metric-card">
+                    <h3>Total Sales</h3>
+                    <span id="total-sales">$0</span>
+                </div>
+            </div>
+        </div>
+        <div id="settings" class="section">
+            <h2>Settings</h2>
+            <p>Site-wide settings and configurations.</p>
+        </div>
+    </div>
+    <script>
+        // Fetch dashboard data from the server
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch('db.php'); // Adjust the path if needed
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const data = await response.json();
+                document.getElementById('total-users').textContent = data.total_users;
+                document.getElementById('total-products').textContent = data.total_products;
+                document.getElementById('total-customizations').textContent = data.total_customizations;
+                document.getElementById('total-sales').textContent = `$${parseFloat(data.total_sales).toFixed(2)}`; // Format the sales as currency
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+            }
+        }
+
+        // Execute initialization on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDashboardData();
+        });
+    </script>
+</body>
+</html>

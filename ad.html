@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifting Products</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        /* Container layout */
+        .container {
+            width: 100%;
+            display: flex;
+        }
+
+        /* Navigation (category panel) styles */
+        .navigation {
+            width: 20%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #ddd;
+        }
+
+        .navigation h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .navigation .product {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .navigation .product:hover {
+            transform: scale(1.05);
+        }
+
+        .navigation .product img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .navigation .product h3 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .navigation .product p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Main content (product list) styles */
+        .main-content {
+            width: 80%;
+            padding: 20px;
+        }
+
+        /* Category title */
+        .category-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+
+        /* Product grid */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        /* Product card */
+        .product {
+            width: calc(30% - 20px);
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Price and button */
+        .product .price {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #28a745;
+        }
+
+        .product input[type="number"] {
+            width: 40px;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .product button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .product button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 768px) {
+            .navigation {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .main-content {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .product {
+                width: calc(100% - 20px);
+            }
+
+            .navigation .product {
+                width: calc(50% - 10px);
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Initially hide all categories */
+        .product-category {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+  
+  <div class="container">
+        <!-- Navigation Area -->
+        <div class="navigation">
+            <h2>Categories</h2>
+            <div class="product" onclick="showCategory('pillows')">
+                <img src="pillow.jpg" alt="Pillow">
+                <h3>Pillows</h3>
+                <p>Explore our cozy pillow collection!</p>
+            </div>
+            <div class="product" onclick="showCategory('mugs')">
+                <img src="mug.jpg" alt="Mug">
+                <h3>Mugs</h3>
+                <p>Perfect for coffee and tea lovers!</p>
+            </div>
+            <div class="product" onclick="showCategory('teddies')">
+                <img src="teddy-bear.jpg" alt="Teddy Bear">
+                <h3>Teddy Bears</h3>
+                <p>Soft and cuddly companions!</p>
+            </div>
+            <div class="product" onclick="showCategory('diaries')">
+                <img src="diary.jpg" alt="Diary">
+                <h3>Diaries</h3>
+                <p>Perfect for journaling your thoughts!</p>
+            </div>
+            <div class="product" onclick="showCategory('bottles')">
+                <img src="bottle.jpg" alt="Bottle">
+                <h3>Bottles</h3>
+                <p>Keep hydrated on the go!</p>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Pillows Products -->
+            <div class="product-category" id="pillows">
+                <div class="category-title">Pillows</div>
+                <div class="products">
+                    <div class="product">
+                        <img src="pillow1.jpeg" alt="Pillow 1">
+                        <h3>Pillow 1</h3>
+                        <p>Description of Pillow 1 goes here. It's soft and cozy!</p>
+                        <p class="price">$19.99</p>
+                        <input type="number" value="1" min="1" max="10" id="quantity-pillow1">
+                        <button class="add-to-cart" onclick="addToCart('Pillow 1', 19.99, 'quantity-pillow1', 'pillow1.jpeg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="pillow2.jpeg" alt="Pillow 2">
+                        <h3>Pillow 2</h3>
+                        <p>Description of Pillow 2 goes here. Perfect for your bed!</p>
+                        <p class="price">$24.99</p>
+                        <input type="number" value="1" min="1" max="10" id="quantity-pillow2">
+                        <button class="add-to-cart" onclick="addToCart('Pillow 2', 24.99, 'quantity-pillow2', 'pillow2.jpeg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="pillow3.jpeg" alt="Pillow 3">
+                        <h3>Pillow 3</h3>
+                        <p>Description of Pillow 3 goes here. A great gift idea!</p>
+                        <p class="price">$15.99</p>
+                        <input type="number" value="1" min="1" max="10" id="quantity-pillow3">
+                        <button class="add-to-cart" onclick="addToCart('Pillow 3', 15.99, 'quantity-pillow3', 'pillow3.jpeg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="pillow4.jpg" alt="Pillow 4">
+                        <h3>Pillow 4</h3>
+                        <p>Description of Pillow 4 goes here. Super comfortable!</p>
+                        <p class="price">$22.99</p>
+                        <input type="number" value="1" min="1" max="10" id="quantity-pillow4">
+                        <button class="add-to-cart" onclick="addToCart('Pillow 4', 22.99, 'quantity-pillow4', 'pillow4.jpg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="pillow5.jpeg" alt="Pillow 5">
+                        <h3>Pillow 5</h3>
+                        <p>Description of Pillow 5 goes here. The perfect neck support!</p>
+                        <p class="price">$18.99</p>
+                        <input type="number" value="1" min="1" max="10" id="quantity-pillow5">
+                        <button class="add-to-cart" onclick="addToCart('Pillow 5', 18.99, 'quantity-pillow5', 'pillow5.jpeg')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mugs Products -->
+            <div class="product-category" id="mugs">
+                <div class="category-title">Mugs</div>
+                <div class="products">
+                    <div class="product">
+                        <img src="mug1.jpg" alt="Mug 1">
+                        <h3>Mug 1</h3>
+                        <p>Description of Mug 1 goes here. Perfect for coffee!</p>
+                        <p class="price">$9.99</p>
+                        <input type="number" value="1" min="1" id="quantity-mug1">
+                        <button class="add-to-cart" onclick="addToCart('Mug 1', 9.99, 'quantity-mug1', 'mug1.jpg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="mug2.jpg" alt="Mug 2">
+                        <h3>Mug 2</h3>
+                        <p>Description of Mug 2 goes here. Bright and colorful!</p>
+                        <p class="price">$12.99</p>
+                        <input type="number" value="1" min="1" id="quantity-mug2">
+                        <button class="add-to-cart" onclick="addToCart('Mug 2', 12.99, 'quantity-mug2', 'mug2.jpg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="mug3.jpg" alt="Mug 3">
+                        <h3>Mug 3</h3>
+                        <p>Description of Mug 3 goes here. Perfect for tea!</p>
+                        <p class="price">$14.99</p>
+                        <input type="number" value="1" min="1" id="quantity-mug3">
+                        <button class="add-to-cart" onclick="addToCart('Mug 3', 14.99, 'quantity-mug3', 'mug3.jpg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="mug4.jpg" alt="Mug 4">
+                        <h3>Mug 4</h3>
+                        <p>Description of Mug 4 goes here. Stylish and elegant!</p>
+                        <p class="price">$11.99</p>
+                        <input type="number" value="1" min="1" id="quantity-mug4">
+                        <button class="add-to-cart" onclick="addToCart('Mug 4', 11.99, 'quantity-mug4', 'mug4.jpg')">Add to Cart</button>
+                    </div>
+                    <div class="product">
+                        <img src="mug5.jpg" alt="Mug 5">
+                        <h3>Mug 5</h3>
+                        <p>Description of Mug 5 goes here. Great for your morning brew!</p>
+                        <p class="price">$10.99</p>
+                        <input type="number" value="1" min="1" id="quantity-mug5">
+                        <button class="add-to-cart" onclick="addToCart('Mug 5', 10.99, 'quantity-mug5', 'mug5.jpg')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+         <!-- Teddies Products -->
+<div class="product-category" id="teddies">
+    <div class="category-title">Teddy Bears</div>
+    <div class="products">
+        <div class="product">
+            <img src="teddy1.jpg" alt="Teddy Bear 1">
+            <h3>Teddy Bear 1</h3>
+            <p>Description of Teddy Bear 1 goes here. Cuddly and cute!</p>
+            <p class="price">$15.99</p>
+            <input type="number" value="1" min="1" id="quantity-teddy1">
+            <button class="add-to-cart" onclick="addToCart('Teddy Bear 1', 15.99, 'quantity-teddy1', 'teddy1.jpg')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="teddy2.jpg" alt="Teddy Bear 2">
+            <h3>Teddy Bear 2</h3>
+            <p>Description of Teddy Bear 2 goes here. Soft and huggable!</p>
+            <p class="price">$18.99</p>
+            <input type="number" value="1" min="1" id="quantity-teddy2">
+            <button class="add-to-cart" onclick="addToCart('Teddy Bear 2', 18.99, 'quantity-teddy2', 'teddy2.jpg')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="teddy3.jpg" alt="Teddy Bear 3">
+            <h3>Teddy Bear 3</h3>
+            <p>Description of Teddy Bear 3 goes here. A friend for life!</p>
+            <p class="price">$12.99</p>
+            <input type="number" value="1" min="1" id="quantity-teddy3">
+            <button class="add-to-cart" onclick="addToCart('Teddy Bear 3', 12.99, 'quantity-teddy3', 'teddy3.jpg')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="teddy4.jpg" alt="Teddy Bear 4">
+            <h3>Teddy Bear 4</h3>
+            <p>Description of Teddy Bear 4 goes here. Perfect for kids!</p>
+            <p class="price">$17.99</p>
+            <input type="number" value="1" min="1" id="quantity-teddy4">
+            <button class="add-to-cart" onclick="addToCart('Teddy Bear 4', 17.99, 'quantity-teddy4', 'teddy4.jpg')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="teddy5.jpg" alt="Teddy Bear 5">
+            <h3>Teddy Bear 5</h3>
+            <p>Description of Teddy Bear 5 goes here. Super cuddly!</p>
+            <p class="price">$20.99</p>
+            <input type="number" value="1" min="1" id="quantity-teddy5">
+            <button class="add-to-cart" onclick="addToCart('Teddy Bear 5', 20.99, 'quantity-teddy5', 'teddy5.jpg')">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<!-- Diaries Products -->
+<div class="product-category" id="diaries">
+    <div class="category-title">Diaries</div>
+    <div class="products">
+        <div class="product">
+            <img src="diary1.png" alt="Diary 1">
+            <h3>Diary 1</h3>
+            <p>Elegant leather diary perfect for notes and journaling.</p>
+            <p class="price">$29.99</p>
+            <input type="number" value="1" min="1" id="quantity-diary1">
+            <button class="add-to-cart" onclick="addToCart('Diary 1', 29.99, 'quantity-diary1', 'diary1.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="diary2.png" alt="Diary 2">
+            <h3>Diary 2</h3>
+            <p>Personalized diary with a unique design.</p>
+            <p class="price">$34.99</p>
+<input type="number" id="quantity-pillow1" value="1">
+            <button class="add-to-cart" onclick="addToCart('Diary 2', 34.99, 'quantity-diary2', 'diary2.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="diary3.png" alt="Diary 3">
+            <h3>Diary 3</h3>
+            <p>Artistic diary for creative minds.</p>
+            <p class="price">$27.99</p>
+            <input type="number" value="1" min="1" id="quantity-diary3">
+            <button class="add-to-cart" onclick="addToCart('Diary 3', 27.99, 'quantity-diary3', 'diary3.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="diary4.png" alt="Diary 4">
+            <h3>Diary 4</h3>
+            <p>Daily planner to keep your schedule organized.</p>
+            <p class="price">$22.99</p>
+            <input type="number" value="1" min="1" id="quantity-diary4">
+            <button class="add-to-cart" onclick="addToCart('Diary 4', 22.99, 'quantity-diary4', 'diary4.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="diary5.png" alt="Diary 5">
+            <h3>Diary 5</h3>
+            <p>Vintage style diary for timeless memories.</p>
+            <p class="price">$19.99</p>
+            <input type="number" value="1" min="1" id="quantity-diary5">
+            <button class="add-to-cart" onclick="addToCart('Diary 5', 19.99, 'quantity-diary5', 'diary5.png')">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bottles Products -->
+<div class="product-category" id="bottles">
+    <div class="category-title">Bottles</div>
+    <div class="products">
+        <div class="product">
+            <img src="bottle1.png" alt="Bottle 1">
+            <h3>Bottle 1</h3>
+            <p>Reusable stainless steel bottle for everyday use.</p>
+            <p class="price">$24.99</p>
+            <input type="number" value="1" min="1" id="quantity-bottle1">
+            <button class="add-to-cart" onclick="addToCart('Bottle 1', 24.99, 'quantity-bottle1', 'bottle1.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="bottle2.png" alt="Bottle 2">
+            <h3>Bottle 2</h3>
+            <p>Glass water bottle with a modern design.</p>
+            <p class="price">$19.99</p>
+            <input type="number" value="1" min="1" id="quantity-bottle2">
+            <button class="add-to-cart" onclick="addToCart('Bottle 2', 19.99, 'quantity-bottle2', 'bottle2.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="bottle3.png" alt="Bottle 3">
+            <h3>Bottle 3</h3>
+            <p>Portable and lightweight sports bottle.</p>
+            <p class="price">$17.99</p>
+            <input type="number" value="1" min="1" id="quantity-bottle3">
+            <button class="add-to-cart" onclick="addToCart('Bottle 3', 17.99, 'quantity-bottle3', 'bottle3.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="bottle4.png" alt="Bottle 4">
+            <h3>Bottle 4</h3>
+            <p>Insulated bottle to keep your drinks cold.</p>
+            <p class="price">$29.99</p>
+            <input type="number" value="1" min="1" id="quantity-bottle4">
+            <button class="add-to-cart" onclick="addToCart('Bottle 4', 29.99, 'quantity-bottle4', 'bottle4.png')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="bottle5.png" alt="Bottle 5">
+            <h3>Bottle 5</h3>
+            <p>Eco-friendly bamboo bottle with unique design.</p>
+            <p class="price">$22.99</p>
+            <input type="number" value="1" min="1" id="quantity-bottle5">
+            <button class="add-to-cart" onclick="addToCart('Bottle 5', 22.99, 'quantity-bottle5', 'bottle5.png')">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+              const cart = [];
+
+        function showCategory(category) {
+            const categories = document.querySelectorAll('.product-category');
+            categories.forEach(cat => {
+                cat.style.display = 'none';
+            });
+            document.getElementById(category).style.display = 'block';
+        }
+
+        function addToCart(name, price, quantityId) {
+            const quantity = document.getElementById(quantityId).value;
+            const item = { name, price, quantity: parseInt(quantity) };
+            cart.push(item);
+            updateCartDisplay();
+            alert(`Added ${quantity} x ${name} to cart at $${price} each.`);
+        }
+
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = ''; // Clear current items
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `${item.quantity} x ${item.name} - $${(item.price * item.quantity).toFixed(2)}`;
+                cartItemsDiv.appendChild(itemDiv);
+                total += item.price * item.quantity;
+            });
+
+            document.getElementById('total-price').innerHTML = `Total: $${total.toFixed(2)}`;
+        }
+
+        window.onload = () => {
+            showCategory('pillows');
+        };
+    </script>
+</body>
+</html>

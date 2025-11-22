@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact Us - [Your Website Name]</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #d63384;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+        }
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .contact-info div {
+            width: 30%;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .contact-info div p {
+            font-size: 16px;
+            color: #333;
+        }
+        .contact-info div i {
+            font-size: 30px;
+            color: #d63384;
+            margin-bottom: 10px;
+        }
+        .contact-info div i:hover {
+            color: #ff4d94;
+        }
+        .contact-form {
+            margin-top: 40px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+        }
+        input[type="submit"] {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff4d94;
+        }
+
+        .social-icons {
+            text-align: center; /* Centering the social icons */
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 15px;
+            border-radius: 50%; /* Make the icons circular */
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: #007bff; /* Default background color */
+            color: #fff; /* Default icon color */
+            font-size: 24px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition effect */
+        }
+
+        /* Custom colors for individual icons */
+        .social-icons a.facebook { background-color: #3b5998; } /* Facebook blue */
+        .social-icons a.twitter { background-color: #1da1f2; } /* Twitter blue */
+        .social-icons a.instagram { background-color: #c32aa3; } /* Instagram pink */
+
+        .social-icons a:hover {
+            background-color: #50e3f7; /* Darker background color on hover */
+            color: #110101; /* Change icon color on hover */
+        }
+
+        header {
+            background-color: #ff9aa2; /* Soft Coral Pink */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="all.html">Product</a></li>
+
+            <li><a href="login1.php">Login</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+            <li><a href="adlogin.php">Admin</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Contact Us</h1>
+    <p>We would love to hear from you! Whether you have a question about your order, want to give us feedback, or simply want to chat, feel free to get in touch using any of the methods below.</p>
+
+    <h2>Get in Touch</h2>
+
+    <div class="contact-info">
+        <div>
+            <i class="fas fa-envelope"></i>
+            <p><strong>Email Us:</strong><br>support@[yourwebsitename].com</p>
+        </div>
+        <div>
+            <i class="fas fa-phone"></i>
+            <p><strong>Call Us:</strong><br>+91-XXX-XXX-XXXX<br>Monday - Friday, 9:00 AM - 6:00 PM (IST)</p>
+        </div>
+        <div>
+            <i class="fas fa-comments"></i>
+            <p><strong>Live Chat:</strong><br>Available 24/7 on our website for instant support!</p>
+        </div>
+    </div>
+
+    <h3>Connect with Us</h3>
+    <div class="social-icons">
+        <h3>Follow us on:</h3>
+        <a href="#" target="_blank" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank" class="twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>

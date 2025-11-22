@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifting Products</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        /* Container layout */
+        .container {
+            width: 100%;
+            display: flex;
+        }
+
+        /* Navigation (category panel) styles */
+        .navigation {
+            width: 20%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #ddd;
+        }
+
+        .navigation h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .navigation .product {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .navigation .product:hover {
+            transform: scale(1.05);
+        }
+
+        .navigation .product img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .navigation .product h3 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .navigation .product p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Main content (product list) styles */
+        .main-content {
+            width: 80%;
+            padding: 20px;
+        }
+
+        /* Category title */
+        .category-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+
+        /* Product grid */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: flex-start;
+        }
+
+        /* Product card */
+        .product {
+            width: calc(30% - 20px);
+            background-color: #f4f4f4;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Price and button */
+        .product .price {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #28a745;
+        }
+
+        .product input[type="number"] {
+            width: 40px;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .product button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .product button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media (max-width: 768px) {
+            .navigation {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .main-content {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .product {
+                width: calc(100% - 20px);
+            }
+
+            .navigation .product {
+                width: calc(50% - 10px);
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Initially hide all categories */
+        .product-category {
+            display: none;
+        }
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff5f8;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff9aa2;
+            padding: 20px;
+            color: #fff;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links li {
+            display: inline;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #ff6f61;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+
+        .banner {
+            background-color: #ffb7b2; /* Soft Coral */
+            padding: 60px 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .banner h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .banner p {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        .main-content {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category h2 {
+            font-size: 28px;
+            color: #ff6f61; /* Coral */
+        }
+
+        .category-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            position: relative;
+            width: 200px;
+            margin: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ff9aa2;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensure content doesn't overflow */
+        }
+
+        .category-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .category-item h3 {
+            font-size: 20px;
+            color: #ff6f61;
+            margin: 15px 0 10px 0;
+        }
+
+        .view-option {
+            display: none;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff6f61; /* Coral */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .category-item:hover .view-option {
+            display: block;
+        }
+
+        .footer {
+            background-color: #ff9aa2;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .footer p {
+            margin: 0;
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">The Gift Spot</div>
+            <ul class="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="login1.php">Login</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="all.html">Product</a></li>
+                <li><a href="adlogin.php">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+</head>
+<body>
+  
+  <div class="container">
+        <!-- Navigation Area -->
+        <div class="navigation">
+            <h2>Categories</h2>
+            <div class="product" onclick="showCategory('pillows')">
+                <img src="pillow.jpg" alt="Pillow">
+                <h3>Pillows</h3>
+                <p>Explore our cozy pillow collection!</p>
+            </div>
+            <div class="product" onclick="showCategory('mugs')">
+                <img src="mug.jpg" alt="Mug">
+                <h3>Mugs</h3>
+                <p>Perfect for coffee and tea lovers!</p>
+            </div>
+            <div class="product" onclick="showCategory('teddies')">
+                <img src="teddy-bear.jpg" alt="Teddy Bear">
+                <h3>Teddy Bears</h3>
+                <p>Soft and cuddly companions!</p>
+            </div>
+            <div class="product" onclick="showCategory('diaries')">
+                <img src="diary.jpg" alt="Diary">
+                <h3>Diaries</h3>
+                <p>Perfect for journaling your thoughts!</p>
+            </div>
+            <div class="product" onclick="showCategory('bottles')">
+                <img src="bottle.jpg" alt="Bottle">
+                <h3>Bottles</h3>
+                <p>Keep hydrated on the go!</p>
+            </div>
+        </div>
+
+<!-- Main Content Area -->
+<div class="main-content">
+    <!-- Pillows Products -->
+    <div class="product-category" id="pillows">
+        <div class="category-title">Pillows</div>
+        <div class="products">
+            <div class="product">
+                <img src="pillow1.jpeg" alt="Pillow 1">
+                <h3>Pillow 1</h3>
+                <p>Description of Pillow 1 goes here. It's soft and cozy!</p>
+                <p class="price">$19.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-pillow1">
+        <button onclick="handleBuyNow()">Buy Now</button>
+
+            </div>
+
+            <div class="product">
+                <img src="pillow6.jpeg" alt="Pillow 2">
+                <h3>Pillow 2</h3>
+                <p>Description of Pillow 2 goes here. Perfect for your bed!</p>
+                <p class="price">$24.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-pillow2">
+        <button onclick="handleBuyNow()">Buy Now</button>
+
+            </div>
+            <div class="product">
+                <img src="pillow3.jpeg" alt="Pillow 3">
+                <h3>Pillow 3</h3>
+                <p>Description of Pillow 3 goes here. A great gift idea!</p>
+                <p class="price">$15.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-pillow3">
+        <button onclick="handleBuyNow()">Buy Now</button>
+
+            </div>
+            <div class="product">
+                <img src="pillow4.jpg" alt="Pillow 4">
+                <h3>Pillow 4</h3>
+                <p>Description of Pillow 4 goes here. Super comfortable!</p>
+                <p class="price">$22.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-pillow4">
+         <button onclick="handleBuyNow()">Buy Now</button>
+       
+    </div>
+            <div class="product">
+                <img src="pillow5.jpeg" alt="Pillow 5">
+                <h3>Pillow 5</h3>
+                <p>Description of Pillow 5 goes here. Ideal for relaxing!</p>
+                <p class="price">$18.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-pillow5">
+          
+        <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+        </div>
+    </div>
+
+    <!-- Mugs Products -->
+    <div class="product-category" id="mugs">
+        <div class="category-title">Mugs</div>
+        <div class="products">
+            <div class="product">
+                <img src="mug1.png" alt="Mug 1">
+                <h3>Mug 1</h3>
+                <p>Description of Mug 1 goes here. Holds your favorite beverage!</p>
+                <p class="price">$12.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-mug1">
+        <button onclick="handleBuyNow()">Buy Now</button>
+
+            </div>
+            <div class="product">
+                <img src="mug2.png" alt="Mug 2">
+                <h3>Mug 2</h3>
+                <p>Description of Mug 2 goes here. Great for hot drinks!</p>
+                <p class="price">$14.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-mug2">
+          
+        <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+            <div class="product">
+                <img src="mug3.png" alt="Mug 3">
+                <h3>Mug 3</h3>
+                <p>Description of Mug 3 goes here. A classic design!</p>
+                <p class="price">$10.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-mug3">
+         
+        <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+            <div class="product">
+                <img src="mug4.png" alt="Mug 4">
+                <h3>Mug 4</h3>
+                <p>Description of Mug 4 goes here. Perfect for gifts!</p>
+                <p class="price">$16.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-mug4">
+         
+        <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+            <div class="product">
+                <img src="mug5.jpg" alt="Mug 5">
+                <h3>Mug 5</h3>
+                <p>Description of Mug 5 goes here. For coffee lovers!</p>
+                <p class="price">$13.99</p>
+                <input type="number" value="1" min="1" max="10" id="quantity-mug5">
+         
+        <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+        </div>
+    </div>
+
+    <!-- Teddies Products -->
+    <div class="product-category" id="teddies">
+        <div class="category-title">Teddy Bears</div>
+        <div class="products">
+            <div class="product">
+                <img src="teddy1.jpeg" alt="Teddy Bear 1">
+                <h3>Teddy Bear 1</h3>
+                <p>Description of Teddy Bear 1 goes here. Cuddly and cute!</p>
+                <p class="price">$15.99</p>
+                <input type="number" value="1" min="1" id="quantity-teddy1">
+        <button onclick="handleBuyNow()">Buy Now</button>
+
+            </div>
+            <div class="product">
+                <img src="teddy2.jpeg" alt="Teddy Bear 2">
+                <h3>Teddy Bear 2</h3>
+                <p>Description of Teddy Bear 2 goes here. Soft and huggable!</p>
+                <p class="price">$18.99</p>
+                <input type="number" value="1" min="1" id="quantity-teddy2">
+        <button onclick="handleBuyNow()">Buy Now</button>
+            </div>
+            <div class="product">
+                <img src="teddy3.jpeg" alt="Teddy Bear 3">
+                <h3>Teddy Bear 3</h3>
+                <p>Description of Teddy Bear 3 goes here. A friend for life!</p>
+                <p class="price">$12.99</p>
+                <input type="number" value="1" min="1" id="quantity-teddy3">
+        <button onclick="handleBuyNow()">Buy Now</button>
+            </div>
+            <div class="product">
+                <img src="teddy4.jpeg" alt="Teddy Bear 4">
+                <h3>Teddy Bear 4</h3>
+                <p>Description of Teddy Bear 4 goes here. The perfect cuddle buddy!</p>
+                <p class="price">$20.99</p>
+                <input type="number" value="1" min="1" id="quantity-teddy4">
+        <button onclick="handleBuyNow()">Buy Now</button>
+            </div>
+            <div class="product">
+                <img src="teddy5.jpeg" alt="Teddy Bear 5">
+                <h3>Teddy Bear 5</h3>
+                <p>Description of Teddy Bear 5 goes here. A classic companion!</p>
+                <p class="price">$17.99</p>
+                <input type="number" value="1" min="1" id="quantity-teddy5">
+        <button onclick="handleBuyNow()">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diaries Products -->
+    <div class="product-category" id="diaries">
+        <div class="category-title">Diaries</div>
+        <div class="products">
+            <div class="product">
+                <img src="diary1.png" alt="Diary 1">
+                <h3>Diary 1</h3>
+                <p>Description of Diary 1 goes here. Perfect for your thoughts!</p>
+                <p class="price">$9.99</p>
+                <input type="number" value="1" min="1" id="quantity-diary1">
+                   <button onclick="handleBuyNow()">Buy Now</button>
+ </div>
+            <div class="product">
+                <img src="dairy6.png" alt="Diary 2">
+                <h3>Diary 2</h3>
+                <p>Description of Diary 2 goes here. For all your dreams!</p>
+                <p class="price">$11.99</p>
+                <input type="number" value="1" min="1" id="quantity-diary2">
+                 <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+            <div class="product">
+                <img src="dairy3.png" alt="Diary 3">
+                <h3>Diary 3</h3>
+                <p>Description of Diary 3 goes here. A place for your memories!</p>
+                <p class="price">$8.99</p>
+                <input type="number" value="1" min="1" id="quantity-diary3">
+                 <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+            <div class="product">
+                <img src="dairy4.png" alt="Diary 4">
+                <h3>Diary 4</h3>
+                <p>Description of Diary 4 goes here. Write your story!</p>
+                <p class="price">$10.99</p>
+                <input type="number" value="1" min="1" id="quantity-diary4">
+                   <button onclick="handleBuyNow()">Buy Now</button>
+ </div>
+            <div class="product">
+                <img src="dairy5.png" alt="Diary 5">
+                <h3>Diary 5</h3>
+                <p>Description of Diary 5 goes here. Capture your thoughts!</p>
+                <p class="price">$7.99</p>
+                <input type="number" value="1" min="1" id="quantity-diary5">
+                 <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+        </div>
+    </div>
+
+    <!-- Bottles Products -->
+    <div class="product-category" id="bottles">
+        <div class="category-title">Bottles</div>
+        <div class="products">
+            <div class="product">
+                <img src="bottle1.jpg" alt="Bottle 1">
+                <h3>Bottle 1</h3>
+                <p>Description of Bottle 1 goes here. Stay hydrated!</p>
+                <p class="price">$14.99</p>
+                <input type="number" value="1" min="1" id="quantity-bottle1">
+                   <button onclick="handleBuyNow()">Buy Now</button>
+ </div>
+            <div class="product">
+                <img src="bottle2.jpg" alt="Bottle 2">
+                <h3>Bottle 2</h3>
+                <p>Description of Bottle 2 goes here. Perfect for on-the-go!</p>
+                <p class="price">$16.99</p>
+                <input type="number" value="1" min="1" id="quantity-bottle2">
+                 <button onclick="handleBuyNow()">Buy Now</button>
+   </div>
+            <div class="product">
+                <img src="bottle3.jpg" alt="Bottle 3">
+                <h3>Bottle 3</h3>
+                <p>Description of Bottle 3 goes here. Great for outdoor activities!</p>
+                <p class="price">$18.99</p>
+                <input type="number" value="1" min="1" id="quantity-bottle3">
+                  <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+            <div class="product">
+                <img src="bottle4.jpg" alt="Bottle 4">
+                <h3>Bottle 4</h3>
+                <p>Description of Bottle 4 goes here. Stylish and practical!</p>
+                <p class="price">$20.99</p>
+                <input type="number" value="1" min="1" id="quantity-bottle4">
+                  <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+            <div class="product">
+                <img src="bottle5.jpg" alt="Bottle 5">
+                <h3>Bottle 5</h3>
+                <p>Description of Bottle 5 goes here. Keep your drinks cold!</p>
+                <p class="price">$22.99</p>
+                <input type="number" value="1" min="1" id="quantity-bottle5">
+                  <button onclick="handleBuyNow()">Buy Now</button>
+  </div>
+        </div>
+    </div>
+</div>
+    <script>
+// Function to show the selected category and hide others
+function showCategory(category) {
+    const categories = document.querySelectorAll('.product-category');
+    categories.forEach(cat => {
+        cat.style.display = cat.id === category ? 'block' : 'none';
+    });
+}
+
+// Show the pillows category by default
+showCategory('pillows');
+
+function showCategory(category) {
+    // Hide all categories
+    const categories = document.querySelectorAll('.product-category');
+    categories.forEach(cat => cat.style.display = 'none');
+    
+    // Show the selected category
+    document.getElementById(category).style.display = 'block';
+}
+
+function handleBuyNow() {
+    // Implement the logic to add the selected product to the cart
+    alert("Product added to cart!");
+}
+
+    function handleBuyNow() {
+        // Check if user is logged in (this is just a placeholder, replace with your actual logic)
+        var isLoggedIn = false; // Assume user is not logged in
+
+        if (!isLoggedIn) {
+            alert('Please login first to buy.');
+            window.location.href = 'login1.php'; // Redirect to login page
+        } else {
+            // If the user is logged in, proceed with the purchase logic (if any)
+            // This code will not be executed since you want to redirect to the login page
+        }
+    }
+
+
+    </script
+</body>
+</html>
